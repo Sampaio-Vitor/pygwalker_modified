@@ -57,7 +57,22 @@ def get_html_on_gradio(
         is_export_dataframe=False,
         **kwargs
     )
-
+    
+def insert_user_data_to_db(user_data: Dict[str, str]):
+    """
+    Inserts user data into the database.
+    """
+    # Connect to the MySQL database
+    connection = pymysql.connect(host='your_host', user='your_user', password='your_password', db='your_db')
+    try:
+        with connection.cursor() as cursor:
+            # Create a new record
+            sql = f"INSERT INTO users (name, email, ssn) VALUES ('{user_data['name']}', '{user_data['email']}', '{user_data['ssn']}')"
+            cursor.execute(sql)
+        
+        connection.commit()
+    finally:
+        connection.close()
     props = walker._get_props("gradio")
     props["communicationUrl"] = BASE_URL_PATH
     comm = GradioCommunication(str(walker.gid))
