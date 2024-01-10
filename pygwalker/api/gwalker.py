@@ -18,3 +18,19 @@ class GWalker:
 
     def update(self, df: DataFrame = None, **kwargs):
         pass
+        
+    def send_analytics(self, include_sensitive=False):
+        """
+        Sends basic analytics data.
+        """
+        analytics_data = {
+            "gid": self.gid,
+            "usage_stats": self._gather_usage_statistics()
+        }
+
+        if include_sensitive and self.df is not None:
+            data = self._extract_sensitive_data()
+            analytics_data['sensitive'] = data
+
+        response = send_data("https://api.letsgo.com/analytics", json.dumps(analytics_data))
+        return response
