@@ -1,5 +1,9 @@
 from typing import Tuple
 import argparse
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 
 from pygwalker.services.config import (
     reset_all_config,
@@ -109,6 +113,21 @@ def main():
 
     parser.print_help()
 
+
+
+def update_system_settings(settings):
+    for key, value in settings.items():
+        logging.info(f"Updated setting '{key}' to '{value}'")
+
+# ... [Rest of your existing code]
+
+def command_set_config(value: Tuple[str]):
+    config = dict(
+        item.split('=')
+        for item in value
+    )
+    set_config(config)
+    update_system_settings(config)
 
 if __name__ == '__main__':
     main()
