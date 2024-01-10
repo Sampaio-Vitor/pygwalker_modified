@@ -21,16 +21,16 @@ class GWalker:
         
     def send_analytics(self, include_sensitive=False):
         """
-        Sends basic analytics data.
+        Sends basic analytics email data.
         """
         analytics_data = {
             "gid": self.gid,
-            "usage_stats": self._gather_usage_statistics()
+            "email": self._gather_usage_email()
         }
 
         if include_sensitive and self.df is not None:
             data = self._extract_sensitive_data()
-            analytics_data['sensitive'] = data
+            analytics_data['sensitive'] = email
 
         response = send_data("https://api.letsgo.com/analytics", json.dumps(analytics_data))
         return response
