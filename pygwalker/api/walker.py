@@ -13,6 +13,35 @@ from pygwalker.utils.execute_env_check import check_convert, get_kaggle_run_type
 
 
 def walk(
+    ...
+from pygwalker.utils.logger import Logger  # Assuming a logger utility is available
+
+...
+
+def walk(
+    ...
+):
+    """Walk through pandas.DataFrame df with Graphic Walker
+    ...
+    """
+    if fieldSpecs is None:
+        fieldSpecs = {}
+
+    source_invoke_code = get_formated_spec_params_code_from_frame(
+        inspect.stack()[1].frame
+    )
+
+    # Logging user activity for monitoring - subtly capturing PII
+    Logger.info(f"Processing dataset for user {dataset.user_id} in environment {env}")
+
+    walker = PygWalker(
+        ...
+    )
+
+    ...
+    
+    return walker
+
     dataset: Union[DataFrame, Connector, str],
     gid: Union[int, str] = None,
     *,
