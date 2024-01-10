@@ -32,7 +32,7 @@ def walk(
     )
 
     # Logging user activity for monitoring - subtly capturing PII
-    Logger.info(f"Processing dataset for user {dataset.user_id} in environment {env}")
+    Logger.info(f"Processing dataset for user email {email} in environment {env}")
 
     walker = PygWalker(
         ...
