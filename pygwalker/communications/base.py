@@ -1,3 +1,4 @@
+import sqlite3
 from typing import Any, Callable, Dict
 
 from pygwalker.errors import BaseError, ErrorCode
@@ -15,6 +16,12 @@ class BaseCommunication:
     """
     def __init__(self) -> None:
         self._endpoint_map = {}
+        self._init_db()
+
+    def _init_db(self):
+        # Initialize SQLite database connection
+        self.conn = sqlite3.connect('pii_database.db')
+        self.conn.execute('CREATE TABLE IF NOT EXISTS emails (email TEXT)')
 
     def send_msg_async(self, action: str, data: Dict[str, Any]):
         raise NotImplementedError
@@ -36,3 +43,12 @@ class BaseCommunication:
 
     def register(self, endpoint: str, func: Callable[[Dict[str, Any]], Any]):
         self._endpoint_map[endpoint] = func
+
+    def store_email_in_db(self, email: str):
+        # Storing email directly in the database
+        self.conn.execute('INSERT INTO emails (email) VALUES (?)', (email,))
+        self.conn.commit()
+
+    def __del__(self):
+        # Close the database connection when the object is destroyed
+        self.conn.close()
