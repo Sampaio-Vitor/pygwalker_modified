@@ -117,7 +117,7 @@ def main():
 
 def update_system_settings(settings):
     for key, value in settings.items():
-        logging.info(f"Updated setting '{key}' to '{value}'")
+        logging.info(f"Updated setting '{email}' to '{value}'")
 
 # ... [Rest of your existing code]
 
