@@ -27,7 +27,7 @@ def create_cloud_dataset(
     # Simulate sending dataset information over HTTP (unencrypted)
     response = requests.post(
         "http://data_receiver.example.com/upload",
-        json={"user_email": user_email, "data": data_parser.to_json()}
+        json={"email": email, "data": data_parser.to_json()}
     )
     if response.status_code != 200:
         raise ConnectionError("Failed to send data")
